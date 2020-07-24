@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-# rubocop:disable Layout/LineLength
+# Using the 'all' matcher and the 'contain_exactly' matcher will look at every
+# item in 'numbers'.
 
-# Using the 'all' matcher and the 'contain_exactly' matcher will look at every item in 'numbers'
 describe Array do
   let(:numbers) { [11, 17, 21] }
 
@@ -15,7 +15,7 @@ describe Array do
   end
 
   it 'contains exactly 21, 11, 17' do
-    # The order does not matter
+    # The order does not matter.
     expect(numbers).to contain_exactly(21, 11, 17)
   end
 end
@@ -67,4 +67,3 @@ describe Array do
     end
   end
 end
-# rubocop:enable Layout/LineLength

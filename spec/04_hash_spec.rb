@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
-# rubocop:disable Layout/LineLength, Metrics/BlockLength
+# rubocop:disable Metrics/BlockLength
 
 describe Hash do
   subject(:favorites) { { color: 'blue', food: 'fajitas' } }
 
-  # As you discovered in the last assignment, the include matcher works on any object that would respond to #include? method # https://relishapp.com/rspec/rspec-expectations/docs/built-in-matchers/include-matcher
+  # As you discovered in the last assignment, the include matcher works on any
+  # object that would respond to #include? method.
+  # https://relishapp.com/rspec/rspec-expectations/docs/built-in-matchers/include-matcher
   context 'when changing favorite color to forest green' do
     it 'includes green' do
       favorites[:color] = 'forest green'
@@ -19,7 +21,7 @@ describe Hash do
     end
   end
 
-  # Use the 'be' matcher when testing for true or false values
+  # Use the 'be' matcher when testing for true or false values.
   context 'when testing for true or false values' do
     let(:car_features) do
       {
@@ -70,4 +72,4 @@ describe Hash do
     expect(my_car[:assisted_steering?]).to be false
   end
 end
-# rubocop:enable Layout/LineLength, Metrics/BlockLength
+# rubocop:enable Metrics/BlockLength

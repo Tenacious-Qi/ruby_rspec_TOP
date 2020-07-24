@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
-# rubocop:disable Layout/LineLength
-
-# If you need to test a condition that does not have a built-in matcher, you can create your own.
+# If you need to test a condition that does not have a built-in matcher,
+# you can create your own.
 # https://relishapp.com/rspec/rspec-expectations/v/3-9/docs/custom-matchers
 
 describe 'defining custom matchers' do
@@ -15,12 +14,12 @@ describe 'defining custom matchers' do
       expect(12).to be_divisible_by_four
     end
 
-    # You can test for the inverse of the matcher
+    # You can test for the inverse of the matcher.
     it 'is not divisible by 4' do
       expect(99).not_to be_divisible_by_four
     end
 
-    # You can even use a custom matcher with 'all'
+    # You can even use a custom matcher with 'all'.
     it 'works with multiple values' do
       expect([12, 100, 800]).to all(be_divisible_by_four)
     end
@@ -43,17 +42,23 @@ describe 'simple word palindrome test' do
     # remove the 'x' before running this test
     it 'is a palindrome' do
       expect(racecar).to be_a_palindrome
+    end
+
+    # remove the 'x' before running this test
+    xit 'is a palindrome' do
       expect(rotator).to be_a_palindrome
     end
   end
 
-  context 'when spaceship and palindrome is used' do
+  context 'when a palindrome is not used' do
     # remove the 'x' before running this test
     it 'is not a palindrome' do
       expect(spaceship).not_to be_a_palindrome
+    end
+
+    # remove the 'x' before running this test
+    xit 'is not a palindrome' do
       expect(palindrome).not_to be_a_palindrome
     end
   end
 end
-
-# rubocop:enable Layout/LineLength

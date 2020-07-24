@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
-# rubocop:disable Layout/LineLength
-
 describe String do
   # The let method is passed a block that computes the value of the variable.
-  # It will only be called when the variable is needed (known as: lazy loading)
+  # It will only be called when the variable is needed (known as: lazy loading).
   let(:favorite_color) { String.new('blue') }
 
   # Use a context block to make your tests clear and well organized.
-  # It is not required, but it is generally used to explain any conditionals
-  # should start with words like: if, when, unless, with, without, for, before, after, during
+  # It is not required, but it is generally used to explain any conditionals.
+  # Here are some examples of words that context should start with:
+  # if, when, unless, with, without, for, before, after, during
+
   context 'when a let variable is used' do
     it 'is the value of assigned let variable' do
       expect(favorite_color).to eq('blue')
@@ -23,7 +23,7 @@ describe String do
       expect(favorite_color).to eq('navy blue')
     end
 
-    # let variables reset between examples
+    # Let variables reset between examples.
     it 'is the value of assigned let variable' do
       expect(favorite_color).to eq('blue')
     end
@@ -50,5 +50,3 @@ describe String do
     end
   end
 end
-
-# rubocop:enable Layout/LineLength

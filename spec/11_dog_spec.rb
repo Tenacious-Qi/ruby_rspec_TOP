@@ -3,17 +3,18 @@
 require_relative '../lib/11_dog'
 require_relative '../spec/11_shared_example_spec'
 
-# rubocop:disable Layout/LineLength
+# This example has a 'Pet' class with two sub-classes 'Cat' and 'Dog'.
+# There is a spec file for cat & dog (each file begins with '11_').
 
-# Not only will the class being tested be located in a different file,
-# but there are multiple classes for this example. All files begin with '11_'
+# In addition, there is a third spec file called '11_shared_example'.
+# This file has two tests that are used in both the cat & dog spec files.
 
 describe Dog do
   subject(:toby) { described_class.new('Toby', nil, 'brown') }
 
-  # Check out the file: 11_shared_examples_spec.rb
-  # This test references that file's first test in the 'include_examples' line
-  # The shared_example_spec file has further information
+  # Check out the file: 11_shared_examples_spec.rb.
+  # This test references that file's first test in the 'include_examples' line.
+  # The shared_example_spec file has further information.
   context 'when Dog is a child class of Pet' do
     include_examples 'base class method name'
   end
@@ -27,6 +28,7 @@ describe Dog do
 end
 
 # ASSIGNMENT - complete either Cat or Dog assignment
+# (see 11_cat_spec.rb for Cat assignment)
 
 describe Dog do
   # create a subject with your choice of cat name and optional breed/color
@@ -43,4 +45,3 @@ describe Dog do
   xit 'is sleeping' do
   end
 end
-# rubocop:enable Layout/LineLength
