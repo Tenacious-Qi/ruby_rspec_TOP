@@ -29,7 +29,9 @@ describe NumberGame do
     # ASSIGNMENT
     # Write a similar test as the one above, that uses a custom matcher (instead of <, >, =)
     # remove the 'x' before running this test
-    xit 'is a number between 0 and 9' do
+    it 'is a number between 0 and 9' do
+      solution = game.solution
+      expect(solution).to be_between(0, 9)
     end
   end
 
@@ -46,7 +48,10 @@ describe NumberGame do
     # Write one test for when game.solution does not equal correct_guess?
     context 'when user guess is not correct' do
       # remove the 'x' before running this test
-      xit 'is not game over' do
+      it 'is not game over' do
+        game.instance_variable_set(:@solution, 4)
+        game.instance_variable_set(:@guess, '9')
+        expect(game).not_to be_game_over
       end
     end
   end
@@ -86,19 +91,19 @@ describe NumberGame do
         expect(verified_input).to eq('5')
       end
     end
-
+  
     # ASSIGNMENT
     context 'when given invalid input twice before valid input' do
       # remove the 'x' before running this test
-      xit 'loops twice and returns valid input' do
+      it 'loops twice and returns valid input' do
         letter_input = 'h'
         number_input = '3'
         # Create another invalid input (anything except a digit between 0-9).
-
+        invalid_input = 'beans'
         # Create a stub method to receive :player_input and return your invalid input and the number_input
-
+        allow(game).to receive(:player_input).and_return(invalid_input, number_input)
         # Create an expectation that :puts will be recieved twice with the error message
-
+        expect(game).to receive(:puts).twice.with('Input error!')
         verified_input = game.verify_input(letter_input)
         expect(verified_input).to eq(number_input)
       end
@@ -124,19 +129,21 @@ describe NumberGame do
     # ASSIGNMENT
     context 'when count is 2-3' do
       # remove the 'x' before running this test
-      xit 'outputs correct phrase' do
+      it 'outputs correct phrase' do
         game.instance_variable_set(:@count, 3)
         congrats_phrase = "Congratulations! You picked the random number in 3 guesses!\n"
         # Write the expect statement for this test
-        congrats_phrase # Use congrats_phrase variable
+        expect { game.final_message }.to output(congrats_phrase).to_stdout # Use congrats_phrase variable
       end
     end
 
     # ASSIGNMENT
     context 'when count is 4 and over' do
       # remove the 'x' before running this test
-      xit 'outputs correct phrase' do
+      it 'outputs correct phrase' do
         # Write the conditions to make this test pass
+        game.instance_variable_set(:@count, 5)
+        phrase = "That was hard. It took you 5 guesses!\n"
         expect { game.final_message }.to output(phrase).to_stdout
       end
     end

@@ -55,13 +55,16 @@ end
 describe Array do
   let(:fibonacci_sequence) { [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89] }
   # Write a test that expresses each of the following statements
-
+  context 'testing fibonacci sequence' do
   # remove the 'x' before running this test
-  xit 'includes 21 and ends with 89' do
-  end
+    it 'includes 21 and ends with 89' do
+      expect(fibonacci_sequence).to include(21).and end_with(89)
+    end
 
-  # remove the 'x' before running this test
-  xit 'starts with 1, 1, 2 and all are under 100' do
+    # remove the 'x' before running this test
+    it 'starts with 1, 1, 2 and all are under 100' do
+      expect(fibonacci_sequence).to all(be < 100).and start_with([1, 1, 2])
+    end
   end
 end
 # rubocop:enable Layout/LineLength

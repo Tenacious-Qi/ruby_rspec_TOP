@@ -36,10 +36,12 @@ describe 'simple word palindrome test' do
   let(:palindrome) { 'palindrome' }
 
   # Write one custom matcher for a simple word palindrome that will pass all of the following tests
-
+  matcher :be_a_palindrome do
+    match { |word| word == word.reverse }
+  end
   context 'when racecar and rotator is used' do
     # remove the 'x' before running this test
-    xit 'is a palindrome' do
+    it 'is a palindrome' do
       expect(racecar).to be_a_palindrome
       expect(rotator).to be_a_palindrome
     end
@@ -47,7 +49,7 @@ describe 'simple word palindrome test' do
 
   context 'when spaceship and palindrome is used' do
     # remove the 'x' before running this test
-    xit 'is not a palindrome' do
+    it 'is not a palindrome' do
       expect(spaceship).not_to be_a_palindrome
       expect(palindrome).not_to be_a_palindrome
     end

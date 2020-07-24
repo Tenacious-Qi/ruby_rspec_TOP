@@ -4,29 +4,29 @@ require_relative '../lib/14_find_number'
 
 # rubocop:disable Layout/LineLength, Metrics/BlockLength
 
-# Let's take a look at test-driven development (TDD) technique of using a 'double'.
-# A 'double' is a generic ruby object, that stands in for the real object, like a stunt-double.
+# Let's take a look at test-driven development (TDD) technique called mocking.
+# Mocking uses a 'double', which is a generic ruby object.
+# Doubles are strict, which means you must specify (allow) any messages that it can receive.
+# If the double receives a message that has not been allowed, it will trigger an error.
 
-# Doubles are very useful in TDD because you can create test functionality that is not coded yet.
+# Doubles are useful in TDD because you can create test functionality that is not coded yet.
 
-# In this example, we will be testing the class 'FindNumber'. Look at the lib/14_find_number.rb file.
-# An instance of 'FindNumber' is initialized with a 'RandomNumber' object.
-
-# The 'RandomNumber' class has not been written, so we will use a double for it in these tests.
-# https://relishapp.com/rspec/rspec-mocks/v/3-9/docs/basics/test-doubles
-
-# Learning about doubles can be very confusing, because many resources use doubles/mocks/stubs interchangably.
-# If you want to dig a little deeper, here are a few additional resources to check out:
+# Doubles can be a confusing concept, so here are several resources to check out:
 # https://www.tutorialspoint.com/rspec/rspec_test_doubles.htm
-# https://www.codewithjason.com/rspec-mocks-stubs-plain-english/
+# https://relishapp.com/rspec/rspec-mocks/v/3-9/docs/basics/test-doubles
+# http://testing-for-beginners.rubymonstas.org/test_doubles.html
+
+# In this file, we will be testing the 'FindNumber' class.
+# An instance of 'FindNumber' is initialized with a 'RandomNumber' object.
+# Since we have not written the 'RandomNumber' class, we will use a double to 'mock' it.
+
+# Doubles are used in many different ways - Dummy, Fake, Stubs, Spies, Mocks
+# https://martinfowler.com/bliki/TestDouble.html
 
 describe FindNumber do
   # There are two ways to specify the messages that a double can receive.
 
   describe '#initialize' do
-    # Doubles are strict, which means you must specify (allow) any messages that it can receive.
-    # If the double receives a message that has not been allowed, it will trigger an error.
-
     # This first example creates the double, then allows specific methods.
     context 'when creating the double and allowing method(s) in two steps' do
       let(:random_number) { double('random_number') }
@@ -97,25 +97,53 @@ describe FindNumber do
   describe '#make_guess' do
     subject(:game) { described_class.new(0, 9, random_number) }
     # Create a random_number double & allow it to receive 'value' and return 8 in one of the two ways explained above
+    let(:random_number) { double('random_number', value: 8) }
 
     # Write a test that would expect #make_guess to return the middle number of the min and max values (rounded down)
     context 'when min is 0 and max is 9' do
+      it 'returns 4' do
+        guess = game.make_guess
+        expect(guess).to eq(4)
+      end
     end
 
     # Write a method in 13_find_number.rb called #make_guess that returns the middle number of the min and max values
 
     # Write a test for each of the following contexts:
-
     context 'when min is 5 and max is 9' do
+      it 'returns 7' do
+        game.instance_variable_set(:@min, 5)
+        game.instance_variable_set(:@max, 9)
+        guess = game.make_guess
+        expect(guess).to eq(7)
+      end
     end
 
     context 'when min is 8 and max is 9' do
+      it 'returns 8' do
+        game.instance_variable_set(:@min, 8)
+        game.instance_variable_set(:@max, 9)
+        guess = game.make_guess
+        expect(guess).to eq(8)
+      end
     end
 
     context 'when min is 0 and max is 3' do
+      it 'returns 1' do
+        game.instance_variable_set(:@min, 0)
+        game.instance_variable_set(:@max, 3)
+        guess = game.make_guess
+        expect(guess).to eq(1)
+      end
     end
 
     context 'when min and max both equal 3' do
+      it 'returns 3' do
+        game.instance_variable_set(:@min, 3)
+        game.instance_variable_set(:@max, 3)
+        guess = game.make_guess
+        expect(guess).to eq(3)
+      end
     end
   end
 
@@ -124,10 +152,15 @@ describe FindNumber do
     # In a long test file, it can be helpful to declare variables in each describe block, to make the tests more read-able.
     # When creating another instance of the random number and/or subject, use a different name to differentiate between instances.
     # Create a subject and random_number double & allow it to receive 'value' and return any number from the min - max
-
+    let(:random_five) { double('random_num', value: 5) }
+    subject(:game_five) {described_class.new(0, 9, random_five) }
     # Write a test that would expect game to be_game_over when a guess equals the random_number double's value above
 
     context 'when guess and random_number equal' do
+      it 'is game over' do
+        game_five.instance_variable_set(:@guess, 5)
+        expect(game_five).to be_game_over
+      end
     end
 
     # Write a method in 13_find_number.rb called #game_over? that returns true when a guess equals the value of the random_number
@@ -135,6 +168,10 @@ describe FindNumber do
     # Write a test that would expect game to NOT be_game_over when a guess does NOT equal the random_number double's value above
 
     context 'when guess and random_number does not equal' do
+      it 'is not game over' do
+        game_five.instance_variable_set(:@guess, 2)
+        expect(game_five).not_to be_game_over
+      end
     end
   end
 
@@ -151,22 +188,27 @@ describe FindNumber do
     # Note: this example game starts off with min = 0 and max = 9 due to the { described_class.new(0, 9, random_eight) }
 
     context 'when the guess is 4' do
-      # When using the same 'Arrange' part of a test, you can utilize before hooks to set-up the test conditions.
-      # https://relishapp.com/rspec/rspec-core/v/2-0/docs/hooks/before-and-after-hooks\
-
       before do
         game_eight.instance_variable_set(:@guess, 4)
         game_eight.update_range
       end
-
-      xit 'updates min' do
-      end
-
-      xit 'does not update max' do
+      
+      it 'updates the minimum of range' do
+        game_eight.instance_variable_set(:@min, 5)
+        expect(game_eight.min).to eq(5)
       end
     end
 
     context 'when the guess is 9' do
+      before do
+        game_eight.instance_variable_set(:@guess, 9)
+        game_eight.update_range
+      end
+
+      it 'updates the maximum of range' do
+        game_eight.instance_variable_set(:@max, 8)
+        expect(game_eight.max).to eq(8)
+      end
     end
 
     # Now, write the method in 13_find_number.rb called #update_range that will do the following:
@@ -176,10 +218,20 @@ describe FindNumber do
     # Write a test for any 'edge cases' that you can think of, for example:
 
     context 'when the guess is 7, with min=5 and max=8' do
-      xit 'updates min to the same value as max' do
+      # It is not required to use a before hook in this example, but it is a great tool to 'Arrange' test(s).
+      # https://relishapp.com/rspec/rspec-core/v/2-0/docs/hooks/before-and-after-hooks\
+
+      # It is not required to use 'instance_variable_set' either, but this is another tool to 'Arrange' test(s).
+      # https://apidock.com/ruby/Object/instance_variable_set
+      before do
+        game_eight.instance_variable_set(:@min, 5)
+        game_eight.instance_variable_set(:@max, 8)
+        game_eight.instance_variable_set(:@guess, 7)
       end
 
-      xit 'does not update max' do
+      it 'updates min to the same value as max' do
+        game_eight.update_range
+        expect(game_eight.min).to eq(game_eight.max)
       end
     end
   end

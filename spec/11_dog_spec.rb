@@ -30,7 +30,7 @@ end
 
 describe Dog do
   # create a subject with your choice of cat name and optional breed/color
-
+  
   # write a test using the second shared_example to test that dog should respond to talk
   context '' do
   end

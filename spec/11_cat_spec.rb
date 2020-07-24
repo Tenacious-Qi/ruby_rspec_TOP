@@ -30,17 +30,22 @@ end
 
 describe Cat do
   # create a subject with your choice of cat name and optional breed/color
-
+  subject(:doodle_bug) { described_class.new('Doodle Bug', 'Boston Cat') }
   # write a test using the second shared_example to test that cat should respond to talk
-  context '' do
+  context 'when method name is the same in several classes' do
+    it 'responds to talk' do
+      expect(doodle_bug).to respond_to(:talk)
+    end
   end
 
   # remove the 'x' before running this test
-  xit 'is not hungry' do
+  it 'is not hungry' do
+    expect(subject.hungry?).to eq(false)
   end
 
   # remove the 'x' before running this test
-  xit 'is hiding' do
+  it 'is hiding' do
+    expect(subject.hiding?).to eq(true)
   end
 end
 # rubocop:enable Layout/LineLength
