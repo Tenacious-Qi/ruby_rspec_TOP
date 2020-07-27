@@ -35,6 +35,7 @@ class BinarySearch
   end
 
   def make_guess
+    sleep(2)
     (min + max) / 2
   end
 

@@ -46,6 +46,10 @@ describe BinarySearch do
     # subject & let variable). This is using the formula to calculate the
     # maximum number of guesses for a binary search.
     context 'when max is 9 and min is 0' do
+      it 'returns 4' do
+        result = game_six.max_guesses
+        expect(result).to eq(4)
+      end
     end
   end
 
@@ -97,12 +101,14 @@ describe BinarySearch do
     context 'when using a stub for display_guess and make_guess' do
       context 'when random_number value is 8' do
         # remove the 'x' before running this test
-        xit 'will loop until guess equals 8' do
+        it 'will loop until guess equals 8' do
           # Make 1 stub for #make_guess that will return the values of 4, 7, 8
           # (the mid-point of min & max).
-
+          allow(game_eight).to receive(:make_guess).and_return(4, 7, 8)
           # Write the 3 stubs for #display_guess.
-
+          allow(game_eight).to receive(:display_guess).with(1)
+          allow(game_eight).to receive(:display_guess).with(2)
+          allow(game_eight).to receive(:display_guess).with(3)
           game_eight.computer_turns
           guess = game_eight.guess
           expect(guess).to eq(8)
@@ -117,6 +123,20 @@ describe BinarySearch do
   # Bonus: Remove the two puts statements from outputting when the test is run.
 
   describe '#start' do
+    context 'when random number is two' do
+      subject(:game_two) { described_class.new(0, 9, random_two) }
+      let(:random_two) { instance_double('random_number', value: 2) }
+      it 'will loop until guess == 2' do
+        # allow(game_two).to receive(:puts).twice
+        allow(game_two).to receive(:make_guess).and_return(4, 2)
+        # allow(game_two).to receive(:display_guess).with(1)
+        # allow(game_two).to receive(:display_guess).with(2)
+        # allow(game_two).to receive(:display_guess).with(3)
+        game_two.computer_turns
+        guess = game_two.guess
+        expect(guess).to eq(2)
+      end
+    end
   end
 end
 

@@ -42,9 +42,19 @@ describe CaesarBreaker do
 
   # Write at least one test for each of the following methods:
   describe '#create_decrypted_messages' do
+    it 'creates an array of messages with a size of 25' do
+      phrase.create_decrypted_messages
+      number_of_messages = phrase.decrypted_messages.size
+      expect(number_of_messages).to eq(25)
+    end
   end
 
   describe '#translate' do
+    it 'shifts the phrase a number of letters' do
+    shift = 5
+    result = phrase.translate(shift)
+    expect(result).to eq('Jgnnq, Yqtnf!')
+    end
   end
 
   describe '#character_shift' do
@@ -59,7 +69,12 @@ describe CaesarBreaker do
     # ASSIGNMENT
 
     # Write the following test using a special character.
-    xit 'does not shift non-letters' do
+    it 'does not shift non-letters' do
+      character = '!'
+      shift = 1
+      base = 65
+      result = phrase.character_shift(character, base, shift)
+      expect(result).to eq('!')
     end
   end
 
@@ -121,12 +136,26 @@ describe CaesarBreaker do
 
   # Write at least one test for each of the following methods:
   describe '#save_to_yaml' do
+    it 'calls the dump method' do
+      expect(YAML).to receive(:dump)
+      phrase.save_to_yaml
+    end
   end
 
   describe '#create_filename' do
+    it 'uses regex to create the filename' do
+      phrase.instance_variable_set(:@message, 'hello!')
+      expect(phrase.create_filename).to eq('hello')
+    end
   end
 
   describe '#display_file_location' do
+    it 'lets you know which message has been decoded' do
+      message = phrase.message
+      allow(phrase).to receive(:puts).once.with('The 25 possibilities are saved in a file in 16_cipher/')
+      expect(phrase).to receive(:puts).once.with("'#{message}' has been decoded.")
+      phrase.display_file_location
+    end
   end
 end
 # rubocop:enable Metrics/BlockLength
